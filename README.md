@@ -10,6 +10,6 @@ Releases: https://github.com/Nature40/audiodb/releases
 
 ---
 
-# Documentation: [>>>**table of contents**<<<](https://github.com/envima/photodb_documentation/tree/main/docs/index.md)
+# [>>>**Documentation homepage**<<<](https://envima.github.io/photodb/)
 
 ---
