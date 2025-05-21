@@ -6,7 +6,7 @@ Requirements: [Java 11 (or newer)](https://adoptium.net)
 
 Supported operation systems: **Ubuntu** and **Windows**
 
-Releases: https://github.com/Nature40/audiodb/releases
+Releases: https://github.com/envima/audiodb/releases
 
 ---
 
