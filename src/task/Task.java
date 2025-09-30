@@ -12,7 +12,7 @@ public abstract class Task extends RecursiveAction implements Comparable<Task> {
 	private static final AtomicLong counter = new AtomicLong(0);
 
 	protected Ctx ctx;
-	private volatile State state = State.INITIAL;
+	private volatile task.State state = task.State.INITIAL;
 	private volatile boolean softCanceled = false;
 	public final long cnt = counter.getAndIncrement();
 	public final long tstart = System.currentTimeMillis();
@@ -26,9 +26,9 @@ public abstract class Task extends RecursiveAction implements Comparable<Task> {
 		this.ctx = ctx;
 		try {
 			init();
-			state = State.INITIAL;
+			state = task.State.INITIAL;
 		} catch (Exception e) {
-			state = State.ERROR;
+			state = task.State.ERROR;
 			throw e;
 		}
 	}
@@ -41,11 +41,11 @@ public abstract class Task extends RecursiveAction implements Comparable<Task> {
 	@Override
 	protected final void compute() {		
 		try {
-			state = State.RUNNING;
+			state = task.State.RUNNING;
 			run();
-			state = State.DONE;
+			state = task.State.DONE;
 		} catch (Exception e) {
-			state = State.ERROR;
+			state = task.State.ERROR;
 			message = e.getMessage();
 			Logger.warn(e);
 		} finally {
@@ -62,7 +62,7 @@ public abstract class Task extends RecursiveAction implements Comparable<Task> {
 		return ctx;
 	}
 
-	public State getState() {
+	public task.State getState() {
 		return state;
 	}
 	
