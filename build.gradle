@@ -1,7 +1,7 @@
 // gradle version 9.1.0, in eclipse gradle version 9.1.0 
 
 plugins { 
-  id "com.github.ben-manes.versions" version "0.42.0" // fails on 0.43.0 and 0.44.0 (Gradle 7.0 needed)   update check task: dependencyUpdates  https://github.com/ben-manes/gradle-versions-plugin
+  id "com.github.ben-manes.versions" version '0.53.0' // update check task: dependencyUpdates  https://github.com/ben-manes/gradle-versions-plugin
 }
 
 /*

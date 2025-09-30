@@ -12,5 +12,5 @@
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="audio.Terminal"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="audio"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="overwrite_yaml data_birds"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="audio"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="audiodb"/>
 </launchConfiguration>

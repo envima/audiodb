@@ -103,7 +103,7 @@ public class Terminal {
 				throw new RuntimeException(e);
 			}
 		} else {
-			throw new RuntimeException("command not found");
+			throw new RuntimeException("command not found [" + command + "]");
 		}	
 	}
 }

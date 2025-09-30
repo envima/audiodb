@@ -13,5 +13,5 @@
     <listAttribute key="tasks">
         <listEntry value="_package"/>
     </listAttribute>
-    <stringAttribute key="working_dir" value="${workspace_loc:/audio}"/>
+    <stringAttribute key="working_dir" value="${workspace_loc:/audiodb}"/>
 </launchConfiguration>
