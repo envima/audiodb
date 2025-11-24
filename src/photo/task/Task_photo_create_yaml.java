@@ -16,12 +16,15 @@ import photo.PhotoDB2;
 import photo.PhotoProjectConfig;
 import task.Cancelable;
 import task.Description;
+import task.Param;
 import task.Role;
 import task.Tag;
 import task.Task;
+import task.Descriptor.Param.Type;
 
 @Tag("photo")
 @Description("Traverse folder and subfolders of root_data_path and, for all JPG image files without the YAML metadata file in folder of root_path, create a new YAML file. As preliminary location name, the path from root_data_path up to image file is set. If image file is directly at root_data_path, no location is set. The date is parsed from image file name (currently only format: '*_yyyyMMdd_HHmmss.jpg'). If not possible, date is parsed from image internal meta data. If not possible, no date is set.")
+@Param(name = "project", type = Type.STRING, preset = "", description = "Photo project to scan. May be left empty if there is one project only.")
 @Cancelable
 @Role("admin")
 public class Task_photo_create_yaml extends Task {
@@ -41,15 +44,38 @@ public class Task_photo_create_yaml extends Task {
 
 	@Override
 	protected void init() throws Exception {
-		PhotoProjectConfig[] values = ctx.broker.config().photoConfig.projectMap.values().toArray(PhotoProjectConfig[]::new);
-		if(values.length < 1) {
-			throw new RuntimeException("missing photo project");
+		PhotoProjectConfig[] projectConfigs = ctx.broker.config().photoConfig.projectMap.values().toArray(PhotoProjectConfig[]::new);
+
+		String paramProject = this.ctx.getParamString("project");
+
+		if(projectConfigs.length < 1) {
+			throw new RuntimeException("no photo projects");
+		} else if(paramProject.isBlank()) {		
+			if(projectConfigs.length == 1) {
+				PhotoProjectConfig photoProjectConfig = projectConfigs[0];
+				this.photoProjectConfig = photoProjectConfig;
+				root_path = photoProjectConfig.root_path;
+				root_data_path = photoProjectConfig.root_data_path;
+				root_path_same_root_data_path = root_path == root_data_path;
+			} else {
+				throw new RuntimeException("multiple photo projects and missing project parameter. You need to set the task project paramter to a project name.");
+			}
+		} else {
+			PhotoProjectConfig photoProjectConfig = null;
+			for(PhotoProjectConfig pc : projectConfigs) {
+				if(paramProject.equals(pc.project)) {
+					photoProjectConfig = pc;
+				}
+			}
+			if(photoProjectConfig == null) {
+				throw new RuntimeException("photo project not found");
+			} else {
+				this.photoProjectConfig = photoProjectConfig;
+				root_path = photoProjectConfig.root_path;
+				root_data_path = photoProjectConfig.root_data_path;
+				root_path_same_root_data_path = root_path == root_data_path;
+			}
 		}
-		PhotoProjectConfig photoProjectConfig = values[0];
-		this.photoProjectConfig = photoProjectConfig;
-		root_path = photoProjectConfig.root_path;
-		root_data_path = photoProjectConfig.root_data_path;
-		root_path_same_root_data_path = root_path == root_data_path;
 	}
 
 	@Override

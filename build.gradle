@@ -37,8 +37,8 @@ apply plugin: 'eclipse'
 compileJava.options.encoding = 'UTF-8'
 
 java {
-  sourceCompatibility = '11' // build compatiblity with java 11 and newer
-  targetCompatibility = '11' // run compatiblity with java 11 and newer
+  sourceCompatibility = '17' // build compatiblity with java 11 and newer
+  targetCompatibility = '17' // run compatiblity with java 11 and newer
 }
 
 repositories {
@@ -55,19 +55,19 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.tinylog:tinylog-impl:2.7.0'
-	runtimeOnly 'org.tinylog:slf4j-tinylog:2.7.0'
+	implementation 'org.tinylog:tinylog-impl:2.8.0-M1'
+	runtimeOnly 'org.tinylog:slf4j-tinylog:2.8.0-M1'
   	
-	implementation 'org.eclipse.jetty:jetty-server:11.0.24' // v12.x not compatible with Java 11
-	implementation 'org.eclipse.jetty:jetty-security:11.0.24'
-	implementation 'org.eclipse.jetty.http2:http2-server:11.0.24'
-	implementation 'org.eclipse.jetty:jetty-alpn-java-server:11.0.24'
+	implementation 'org.eclipse.jetty:jetty-server:11.0.26' // v12.x not compatible with Java 11
+	implementation 'org.eclipse.jetty:jetty-security:11.0.26'
+	implementation 'org.eclipse.jetty.http2:http2-server:11.0.26'
+	implementation 'org.eclipse.jetty:jetty-alpn-java-server:11.0.26'
 	
-	implementation 'org.json:json:20240303'
+	implementation 'org.json:json:20250517'
 	implementation 'org.yaml:snakeyaml:1.33'  // TODO: check compatibility with newer version 2.x
 	implementation 'de.siegmar:fastcsv:3.3.1'
-	implementation 'com.opencsv:opencsv:5.9'  
-	implementation 'ch.randelshofer:fastdoubleparser:1.0.1'	
+	implementation 'com.opencsv:opencsv:5.12.0'  
+	implementation 'ch.randelshofer:fastdoubleparser:2.0.1'	
 	
 	implementation 'com.github.wendykierp:JTransforms:3.1'
 	
@@ -153,11 +153,6 @@ task copy_mustache(type: Copy) {
 	into 'package/mustache'
 }
 
-task copy_build(type: Copy, dependsOn: [jar]) {
-	from fileTree('build/libs')
-	into 'package'
-}
-
-task _package(dependsOn:[ clean_package, copy_build, copy_lib, copy_webcontent, copy_mustache, copy_add ]) {
+task _package(dependsOn:[ clean_package, jar, copy_lib, copy_webcontent, copy_mustache, copy_add ]) {
 	group = 'project' 
 }
